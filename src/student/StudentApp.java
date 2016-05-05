@@ -29,7 +29,8 @@ public class StudentApp {
 		LocalDate localDate = LocalDate.now();
 		Comparator <Student> byName = (a,b) -> a.getFirstname().charAt(0) - b.getFirstname().charAt(0);
 		Comparator <Student> byDate = (a,b) -> a.getBirthdate().getDayOfMonth() - b.getBirthdate().getDayOfMonth();
-		Predicate<Student> filter = s -> s.getBirthdate().getMonthValue() == localDate.getMonthValue();
+		Predicate<Student> filter = s -> s.getBirthdate().getDayOfYear() <= localDate.getDayOfYear() +14
+											&& s.getBirthdate().getDayOfYear() >= localDate.getDayOfYear();
 		Consumer <Student> birthday = s -> System.out.printf("%s %s will have birthday on %d %s.\n", 
 				s.getFirstname(),s.getLastname(), s.getBirthdate().getDayOfMonth(),localDate.getMonth());
 		StudentApp app = new StudentApp();
