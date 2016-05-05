@@ -1,6 +1,7 @@
 package student;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -17,18 +18,21 @@ public class StudentApp {
 	 */
 	
 	
-	public void filterAndPrint( List<Student> students, Predicate<Student> filter ) {
+	public void filterAndPrint( List<Student> students, Predicate<Student> filter, Consumer<Student>action ) {
 		for(Student s : students ) {
 			if (filter.test(s))
-	                  System.out.println( s );
+	                  action.accept(s);
 		}
 	}
 	
 	public static void main(String[] args) {
 		List<Student> students = Registrar.getInstance().getStudents();
 		LocalDate localDate = LocalDate.now();
+		
 		Predicate<Student> filter = s -> s.getBirthdate().getMonthValue() == localDate.getMonthValue();
+		Consumer <Student> birthday = s -> System.out.printf("%s %s will have birthday on %d %s.\n", 
+				s.getFirstname(),s.getLastname(), s.getBirthdate().getDayOfMonth(),localDate.getMonth());
 		StudentApp app = new StudentApp();
-		app.filterAndPrint(students, filter );
+		app.filterAndPrint(students, filter,birthday );
 	}
 }
