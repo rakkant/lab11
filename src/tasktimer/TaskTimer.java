@@ -88,6 +88,7 @@ public class TaskTimer
     
     public static void execAndPrint(Runnable task){
     	StopWatch elapsedTime = new StopWatch();
+    	
     	System.out.println(task.toString());
     	elapsedTime.start();
     	task.run();

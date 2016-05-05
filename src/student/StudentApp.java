@@ -1,4 +1,5 @@
 package student;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -18,14 +19,16 @@ public class StudentApp {
 	
 	public void filterAndPrint( List<Student> students, Predicate<Student> filter ) {
 		for(Student s : students ) {
-			if (filter.equals(students))
+			if (filter.test(s))
 	                  System.out.println( s );
 		}
 	}
 	
 	public static void main(String[] args) {
 		List<Student> students = Registrar.getInstance().getStudents();
+		LocalDate localDate = LocalDate.now();
+		Predicate<Student> filter = s -> s.getBirthdate().getMonthValue() == localDate.getMonthValue();
 		StudentApp app = new StudentApp();
-		app.filterAndPrint(students, 12 /* may */);
+		app.filterAndPrint(students, filter );
 	}
 }
